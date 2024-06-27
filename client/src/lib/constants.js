@@ -18,4 +18,4 @@ export const movieSchema = z.object({
   reviews: z.string().min(1, { message: "Reviews are required" }),
 });
 
-export const URL = "http://localhost:8000/api";
+export const URL = "https://invact-task.onrender.com/api";
