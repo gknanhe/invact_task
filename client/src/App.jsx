@@ -11,7 +11,7 @@ import { store } from "./redux/store";
 function App() {
   return (
     <Router>
-      <div>
+      <div className=" no-scrollbar mx-10 lg:mx-28  ">
         <Provider store={store}>
           <Routes>
             <Route exact path="/movie-detail/:id" element={<MovieDetail />} />

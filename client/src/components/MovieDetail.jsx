@@ -8,7 +8,7 @@ const MovieDetail = () => {
   const movies = useSelector((state) => state.movies.movies);
 
   //find movie datails from array
-  const selectedMovie = movies?.movies?.find((movie) => movie._id === id);
+  const selectedMovie = movies?.find((movie) => movie._id === id);
 
   console.log(movies);
   if (!selectedMovie) {

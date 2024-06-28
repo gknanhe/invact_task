@@ -16,6 +16,8 @@ const dialogSlice = createSlice({
       state.isOpen = false;
     },
     setMovieForEdit(state, action) {
+      console.log("action payload", action.payload.title);
+
       state.movieForEdit = action.payload; // Store movie data
     },
   },

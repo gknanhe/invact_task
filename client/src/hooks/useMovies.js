@@ -13,12 +13,12 @@ export const useAddMovies = () => {
 
   const [loading, setLoading] = useState(false);
 
-  const addMovieToDB = async (movieData) => {
+  const addMovieToDB = async (movieData, method) => {
     setLoading(true);
 
     try {
       const res = await fetch(`${URL}/movies/add`, {
-        method: "POST",
+        method: method,
         headers: {
           "Content-Type": "application/json",
         },
@@ -69,7 +69,7 @@ export const useGetAllMovies = () => {
         }
 
         dispatch(allMovies(data));
-        // console.log("all movies", movies);
+        console.log("all movies", data);
       } catch (error) {
         console.log(error.message);
       } finally {
@@ -110,4 +110,40 @@ export const useDeleteMovie = () => {
     }
   };
   return { loading, deleteSeleMovie };
+};
+
+export const useEditMovie = () => {
+  const dispatch = useDispatch();
+
+  const [editing, setEditing] = useState(false);
+
+  const editMovieOnDB = async (movieData, id, method) => {
+    setEditing(true);
+
+    try {
+      const res = await fetch(`${URL}/movies/${id}`, {
+        method: method,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(movieData),
+      });
+
+      const data = await res.json();
+
+      console.log("res,", data);
+
+      if (data.error) {
+        throw new Error(data.message);
+      }
+
+      dispatch(editMovie({ id, data }));
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setEditing(false);
+    }
+  };
+
+  return { editing, editMovieOnDB };
 };

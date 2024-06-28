@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Textarea } from "./ui/textarea";
 import { useAddMovies } from "@/hooks/useMovies";
 import { useDispatch, useSelector } from "react-redux";
@@ -22,7 +22,7 @@ import {
   editMovie,
   deleteMovie,
 } from "../redux/reducers/moviesReducer";
-import { movieSchema } from "@/lib/constants";
+import { formSchema } from "@/lib/constants";
 import {
   Form,
   FormControl,
@@ -37,20 +37,20 @@ export function FormModel() {
   const dispatch = useDispatch();
   const isOpen = useSelector((state) => state.dialog.isOpen);
   const movieToEdit = useSelector((state) => state.dialog.movieForEdit);
-  console.log(movieToEdit);
+  // console.log(movieToEdit);
 
   //use zod validator
 
   const form = useForm({
-    resolver: zodResolver(movieSchema),
+    resolver: zodResolver(formSchema),
     defaultValues: {
-      title: movieToEdit ? movieToEdit.title : "",
-      description: movieToEdit ? movieToEdit?.description : "",
-      releaseYear: movieToEdit ? movieToEdit?.releaseYear : "",
-      genre: movieToEdit ? movieToEdit?.genre : "",
-      imgUrl: movieToEdit ? movieToEdit?.imgUrl : "",
-      rating: movieToEdit ? movieToEdit?.rating : "",
-      reviews: movieToEdit ? movieToEdit?.reviews : "",
+      title: movieToEdit?.title,
+      description: movieToEdit?.description,
+      releaseYear: movieToEdit?.releaseYear,
+      genre: movieToEdit?.genre,
+      imgUrl: movieToEdit?.imgUrl,
+      rating: movieToEdit?.rating,
+      reviews: movieToEdit?.reviews,
     },
   });
 
@@ -80,7 +80,14 @@ export function FormModel() {
 
     // dispatch(addMovie());
 
-    form.reset();
+    // form.reset();
+    form.setValue("title", "");
+    form.setValue("description", "");
+    form.setValue("releaseYear", "");
+    form.setValue("genre", "");
+    form.setValue("imgUrl", "");
+    form.setValue("rating", "");
+    form.setValue("reviews", "");
 
     //close dialoge in store
     if (!loading) dispatch(closeDialog());
@@ -131,7 +138,7 @@ export function FormModel() {
                 name="description"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="] text-muted-foreground">
+                    <FormLabel className=" text-muted-foreground">
                       Description
                     </FormLabel>
                     <FormControl>

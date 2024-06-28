@@ -9,26 +9,26 @@ const moviesSlice = createSlice({
   initialState,
   reducers: {
     allMovies: (state, action) => {
-      state.movies = action.payload;
+      state.movies = action.payload.movies;
     },
 
     addMovie: (state, action) => {
-      state.movies.push(action.payload);
+      state.movies.push(action.payload.newMovie);
     },
     editMovie: (state, action) => {
       const { id, data } = action.payload;
-
-      const index = state.movies.findIndex((movie) => movie.id === id);
-
+      const index = state.movies.findIndex((movie) => movie._id === id);
+      console.log(data, id);
+      const movie = data.movie;
       if (index !== -1) {
-        state.movies[index] = { ...state.movies[index], data };
+        state.movies[index] = { ...state.movies[index], ...movie };
       }
     },
 
     deleteMovie: (state, action) => {
       const id = action.payload;
       console.log(id);
-      state.movies = state.movies?.movies.filter((movie) => movie.id !== id);
+      state.movies = state.movies?.filter((movie) => movie._id !== id);
     },
   },
 });

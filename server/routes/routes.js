@@ -42,6 +42,7 @@ router.post("/movies/add", async (req, res) => {
 router.put("/movies/:id", async (req, res) => {
   try {
     const movieId = req.params.id;
+    console.log(movieId, req.body);
 
     const movie = await Movie.findById(movieId);
 

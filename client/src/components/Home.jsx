@@ -11,7 +11,7 @@ const Home = () => {
 
   const { loading } = useGetAllMovies();
   useEffect(() => {
-    console.log("home", movies);
+    // console.log("home", movies);
   }, [movies]);
 
   return (
@@ -42,14 +42,17 @@ const Home = () => {
         </div>
       ) : (
         <main className="w-full flex justify-center items-center">
-          {movies?.movies?.length <= 0 ? (
+          {movies?.length <= 0 ? (
             <h1 className="m-10 font-semibold text-2xl ">
               No movies in watch list till yet , add new movies
             </h1>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-10 place-content-center place-items-center">
-              {movies.movies?.map((movie) => (
-                <div className="flex flex-col justify-center items-center gap-2 relative top-0 w-fit h-fit">
+              {movies?.map((movie) => (
+                <div
+                  className="flex flex-col justify-center items-center gap-2 relative top-0  h-fit"
+                  key={movie._id}
+                >
                   <div className="absolute z-10 top-1 right-1">
                     <DropdownAction movie={movie ? movie : ""} />
                   </div>
@@ -67,7 +70,7 @@ const Home = () => {
                       <div>
                         <div className="font-semibold text-xl">
                           {movie.title}
-                          <span className="mx-2">{movie.releaseYear}</span>
+                          <span className="mx-2">{`(${movie.releaseYear})`}</span>
                         </div>
                         <div className="text-gray-500">{movie.genre}</div>
                       </div>
